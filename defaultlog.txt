@@ -1,0 +1,12 @@
+name: null
+password: null
+budget: 0
+total spent: 0
+food spent: 0
+gas spent: 0
+coffee spent: 0
+personal spent: 0
+other spent: 0
+--------------------
+
+
