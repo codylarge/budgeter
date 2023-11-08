@@ -11,6 +11,13 @@ public class SaveManager
     public SaveManager()
     {
         this.df = new DataFile(selectSaveFile()); // When creating saveManager, prompt user for save file immediately.
+
+
+        // If it's a new save
+        if(this.getDataFile().getData().getName().equals("null"))
+        {
+            initializeNewSave();
+        }
     }
 
     /* GETTERS */
@@ -24,35 +31,56 @@ public class SaveManager
         return(this.df.getData().toString());
     }
 
+    public void initializeNewSave()
+    {
+        DataField data = this.getDataFile().getData(); // DataField associated with this save file
+        String fileName = this.getDataFile().getFile().getName(); // fileName of this save file (with .txt)
+
+        String name = fileName.substring(0, fileName.lastIndexOf('.')); // remove file extension from fileName
+
+        // Initialize new save data
+        Scanner userInput = new Scanner(System.in);
+        System.out.print("Enter your budget: ");
+        int budget = userInput.nextInt();
+        System.out.print("Enter amount of money already spent: ");
+        int totalSpent = userInput.nextInt();
+
+        // Set new save data
+        data.setName(name);
+        data.setBudget(budget);
+        data.setTotalSpent(totalSpent);
+
+        this.saveToFile();
+    }
+
     public void saveToFile()
     { // Updates the file associated with this object's DataFile effectively saving the game.
-        try (PrintWriter writer = new PrintWriter(this.df.getFile())) {
-            for (String line : this.df.getFileLines()) {
-                if (line.startsWith("name")) {
+        try (PrintWriter writer = new PrintWriter(this.df.getFile()))
+        {
+            for (String line : this.df.getFileLines())
+            {
+                if (line.startsWith("name"))
                     writer.println("name: " + this.df.getData().getName());
-                } else if (line.startsWith("password")) {
-                    writer.println("password: " + this.df.getData().getPassword());
-                } else if (line.startsWith("budget")) {
-                    writer.println("budget: " + this.df.getData().getBudget());
-                } else if (line.startsWith("total spent")) {
-                    writer.println("total spent: " + this.df.getData().getTotalSpent());
-                } else if (line.startsWith("food spent")) {
-                    writer.println("food spent: " + this.df.getData().getFoodSpent());
-                } else if (line.startsWith("gas spent")) {
-                    writer.println("gas spent: " + this.df.getData().getGasSpent());
-                } else if (line.startsWith("coffee spent")) {
-                    writer.println("coffee spent: " + this.df.getData().getCoffeeSpent());
-                } else if (line.startsWith("personal spent")) {
-                    writer.println("personal spent: " + this.df.getData().getPersonalSpent());
-                } else if (line.startsWith("other spent")) {
-                    writer.println("other spent: " + this.df.getData().getOtherSpent());
-                }
-
+                else if (line.startsWith("budget"))
+                  writer.println("budget: " + this.df.getData().getBudget());
+                else if (line.startsWith("total spent"))
+                  writer.println("total spent: " + this.df.getData().getTotalSpent());
+                else if (line.startsWith("food spent"))
+                  writer.println("food spent: " + this.df.getData().getFoodSpent());
+                else if (line.startsWith("gas spent"))
+                  writer.println("gas spent: " + this.df.getData().getGasSpent());
+                else if (line.startsWith("coffee spent"))
+                  writer.println("coffee spent: " + this.df.getData().getCoffeeSpent());
+                else if (line.startsWith("personal spent"))
+                  writer.println("personal spent: " + this.df.getData().getPersonalSpent());
+                else if (line.startsWith("other spent"))
+                  writer.println("other spent: " + this.df.getData().getOtherSpent());
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
     }
+
     public File selectSaveFile() // Returns null if user wants to go back to main menu
     {
         Scanner userInput = new Scanner(System.in);
@@ -96,7 +124,7 @@ public class SaveManager
                 else if(choice == files.length + 1)
                 {
                     //DataFile defaultSave = getDefaultSave();
-                    System.out.println("Enter a name for your save file: ");
+                    System.out.print("Enter a name for your save file: ");
                     String fileName = userInput.next();
 
                     return createDefaultFile(directoryPath, fileName, getDefaultSave());

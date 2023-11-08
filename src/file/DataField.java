@@ -1,18 +1,14 @@
 package file;
-
-
 // The DataFields class is a class that stores some data about the player that will be changed throughout the game such as cash for easy access.
 // The DataFields class also contains methods to read and update data.
 public class DataField
 {
     /* DATA */
     private String name;
-    private String password;
     private int budget, totalSpent, foodSpent, gasSpent, coffeeSpent, personalSpent, otherSpent;
     public DataField() // Not yet used
     {
         this.name = null;
-        this.password = null;
         this.budget = 0;
         this.totalSpent = 0;
         this.foodSpent = 0;
@@ -22,11 +18,10 @@ public class DataField
         this.otherSpent = 0;
     }
 
-    public DataField(String name, String password, int budget, int totalSpent, int foodSpent, int gasSpent,
+    public DataField(String name, int budget, int totalSpent, int foodSpent, int gasSpent,
                      int coffeeSpent, int personalSpent, int otherSpent)
     {
         this.name = name;
-        this.password = password;
         this.budget = budget;
         this.totalSpent = totalSpent;
         this.foodSpent = foodSpent;
@@ -40,10 +35,6 @@ public class DataField
     public void setName(String name)
     {
         this.name = name;
-    }
-    public void setPassword(String password)
-    {
-        this.password = password;
     }
     public void setBudget(int budget)
     {
@@ -79,10 +70,6 @@ public class DataField
     {
         return this.name;
     }
-    public String getPassword()
-    {
-        return this.password;
-    }
     public int getBudget()
     {
         return this.budget;
@@ -116,7 +103,6 @@ public class DataField
     public String toString()
     {
         return "Name: " + this.name +
-             "\nPassword: " + this.password +
              "\nBudget: " + this.budget +
              "\nTotal Spent: " + this.totalSpent +
              "\nFood Spent: " + this.foodSpent +

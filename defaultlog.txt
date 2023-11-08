@@ -1,5 +1,4 @@
 name: null
-password: null
 budget: 0
 total spent: 0
 food spent: 0

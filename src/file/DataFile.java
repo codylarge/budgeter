@@ -55,7 +55,8 @@ public class DataFile
     }
 
     // Print fileLines
-    public String printFile() {
+    public String printFile()
+    {
         StringBuilder fileString = new StringBuilder();
         for (String line : fileLines) {
             fileString.append(line).append("\n");
@@ -72,8 +73,6 @@ public class DataFile
             String[] split = line.split(":");
             if (line.toLowerCase().startsWith("name")) {
                 this.data.setName(split[1].trim());
-            } else if (line.toLowerCase().startsWith("password")) {
-                this.data.setPassword(split[1].trim());
             } else if (line.toLowerCase().startsWith("budget")) {
                 this.data.setBudget(Integer.parseInt(split[1].trim()));
             } else if (line.toLowerCase().startsWith("total spent")) {
