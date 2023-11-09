@@ -111,7 +111,12 @@ public class DataFile
             } else if (line.toLowerCase().startsWith("other spent")) {
                 this.data.setOtherSpent(Integer.parseInt(split[1].trim()));
             } else if (line.contains("weights")) {
-                break;
+                String[] weights = split[1].trim().replaceAll("\\[|\\]", "").split(","); // Convert [x, y, z] to x y z
+                int[] intWeights = new int[weights.length];
+                for (int i = 0; i < weights.length; i++) {
+                    intWeights[i] = Integer.parseInt(weights[i].trim());
+                }
+                this.data.setWeights(intWeights);
             } else if (line.contains("-----")) {
                 break;
             } else {

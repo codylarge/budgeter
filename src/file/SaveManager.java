@@ -10,9 +10,11 @@ import java.util.Scanner;
 
 public class SaveManager
 {
+    Scanner sc;
     DataFile df; // SaveManager will prompt user for datafile when created, must use SaveManager.getDataFile() to access df object in gameManager.
     public SaveManager()
     {
+        this.sc = new Scanner(System.in);
         this.df = new DataFile(selectSaveFile()); // When creating saveManager, prompt user for save file immediately.
 
         // If it's a new save
@@ -20,6 +22,12 @@ public class SaveManager
         {
             initializeNewSave();
         }
+    }
+
+    public SaveManager(DataFile df)
+    {
+        this.sc = new Scanner(System.in);
+        this.df = df;
     }
 
     /* GETTERS */
@@ -41,13 +49,12 @@ public class SaveManager
         String name = fileName.substring(0, fileName.lastIndexOf('.')); // remove file extension from fileName
 
         // Initialize new save data
-        Scanner userInput = new Scanner(System.in);
         System.out.print("Enter your budget: ");
-        int budget = userInput.nextInt();
+        int budget = sc.nextInt();
         System.out.print("Enter amount of money already spent: ");
-        int totalSpent = userInput.nextInt();
+        int totalSpent = sc.nextInt();
         System.out.print("Enter budget duration: ");
-        int budgetDuration = userInput.nextInt();
+        int budgetDuration = sc.nextInt();
 
         // Set new save data
         data.setName(name);
@@ -59,7 +66,7 @@ public class SaveManager
         System.out.println("Current budget distribution: ");
         data.printWeights();
         System.out.println("Change? (y/n)");
-        String choice = userInput.next();
+        String choice = sc.next();
         if(choice.startsWith("y"))
             data.changeWeights();
 
@@ -102,7 +109,6 @@ public class SaveManager
 
     public File selectSaveFile() // Returns null if user wants to go back to main menu
     {
-        Scanner userInput = new Scanner(System.in);
         String directoryPath = "saves";
         File directory = new File(directoryPath);
 
@@ -124,7 +130,7 @@ public class SaveManager
                 }
                 System.out.println("[" +(++i)+ "]" + " Create new save");
                 System.out.println("[" +(++i)+ "]" + " Exit");
-                int choice = userInput.nextInt();
+                int choice = sc.nextInt();
 
                 /* INVALID CHOICE */
                 if(choice < 1 ||  choice > files.length + 3)
@@ -144,7 +150,7 @@ public class SaveManager
                 {
                     //DataFile defaultSave = getDefaultSave();
                     System.out.print("Enter a name for your save file: ");
-                    String fileName = userInput.next();
+                    String fileName = sc.next();
 
                     return createDefaultFile(directoryPath, fileName, getDefaultSave());
                 }

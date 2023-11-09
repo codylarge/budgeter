@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class Facade
 {
-    private static Facade instance;
     private final SaveManager log;
     // Private constructor to prevent creating instances outside this class.
     public Facade()
@@ -13,7 +12,13 @@ public class Facade
         this.log = new SaveManager();
     }
 
-    /*
+    // For tests
+    public Facade(SaveManager s)
+    {
+        this.log = s;
+    }
+
+    /* Singleton
     public static Facade GetInstance()
     {
         if (instance == null)

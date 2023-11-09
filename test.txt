@@ -1,0 +1,11 @@
+name: test
+budget: 1000
+duration: 35
+total spent: 600
+food spent: 100
+gas spent: 100
+coffee spent: 100
+personal spent: 100
+necessity spent: 100
+other spent: 100
+weights: [30, 5, 15, 10, 30, 10]
