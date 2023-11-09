@@ -1,8 +1,0 @@
-name: cody
-budget: 1000
-total spent: 50
-food spent: 0
-gas spent: 0
-coffee spent: 0
-personal spent: 0
-other spent: 0

@@ -85,8 +85,12 @@ public class DataFile
                 this.data.setCoffeeSpent(Integer.parseInt(split[1].trim()));
             } else if (line.toLowerCase().startsWith("personal spent")) {
                 this.data.setPersonalSpent(Integer.parseInt(split[1].trim()));
+            } else if (line.toLowerCase().startsWith("necessity spent")) {
+                this.data.setPersonalSpent(Integer.parseInt(split[1].trim()));
             } else if (line.toLowerCase().startsWith("other spent")) {
                 this.data.setOtherSpent(Integer.parseInt(split[1].trim()));
+            } else if (line.contains("weights")) {
+                break;
             } else if (line.contains("-----")) {
                 break;
             } else {

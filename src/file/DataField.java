@@ -1,25 +1,24 @@
 package file;
+
+import utils.Utils;
+
+import java.util.Scanner;
+
 // The DataFields class is a class that stores some data about the player that will be changed throughout the game such as cash for easy access.
 // The DataFields class also contains methods to read and update data.
 public class DataField
 {
     /* DATA */
     private String name;
-    private int budget, totalSpent, foodSpent, gasSpent, coffeeSpent, personalSpent, otherSpent;
-    public DataField() // Not yet used
+    private int budget, totalSpent, foodSpent, gasSpent, coffeeSpent, personalSpent, necessitySpent, otherSpent;
+    int[] weights; // represents the percentages of the budget that each category should spend
+    public DataField()
     {
-        this.name = null;
-        this.budget = 0;
-        this.totalSpent = 0;
-        this.foodSpent = 0;
-        this.gasSpent = 0;
-        this.coffeeSpent = 0;
-        this.personalSpent = 0;
-        this.otherSpent = 0;
+        this(null, 0, 0, 0, 0, 0, 0, 0, 0, new int[]{25, 10, 10, 10, 30, 15});
     }
 
     public DataField(String name, int budget, int totalSpent, int foodSpent, int gasSpent,
-                     int coffeeSpent, int personalSpent, int otherSpent)
+                     int coffeeSpent, int personalSpent, int necessitySpent, int otherSpent, int[] weights)
     {
         this.name = name;
         this.budget = budget;
@@ -28,7 +27,9 @@ public class DataField
         this.gasSpent = gasSpent;
         this.coffeeSpent = coffeeSpent;
         this.personalSpent = personalSpent;
+        this.necessitySpent = necessitySpent;
         this.otherSpent = otherSpent;
+        this.weights = weights;
     }
 
     // Setters
@@ -60,9 +61,17 @@ public class DataField
     {
         this.personalSpent = personalSpent;
     }
+    public void setNecessitySpent(int necessitySpent)
+    {
+        this.necessitySpent = necessitySpent;
+    }
     public void setOtherSpent(int otherSpent)
     {
         this.otherSpent = otherSpent;
+    }
+    public void setWeights(int[] weights)
+    {
+        this.weights = weights;
     }
 
     // Getters
@@ -94,11 +103,46 @@ public class DataField
     {
         return this.personalSpent;
     }
+    public int getNecessitySpent()
+    {
+        return this.necessitySpent;
+    }
     public int getOtherSpent()
     {
         return this.otherSpent;
     }
+    public int[] getWeights() {
+        return this.weights;
+    }
 
+    public void printWeights()
+    {
+        System.out.println("Food: " + this.weights[0] + "%");
+        System.out.println("Gas: " + this.weights[1] + "%");
+        System.out.println("Coffee: " + this.weights[2] + "%");
+        System.out.println("Personal: " + this.weights[3] + "%");
+        System.out.println("Necessity: " + this.weights[4] + "%");
+        System.out.println("Other: " + this.weights[5] + "%");
+    }
+
+    public void changeWeights()
+    {
+        int weightsTotal = 0; // Ensures the user can never enter weights that dont add to 100%
+        while(weightsTotal != 100) {
+
+            // 1: food, 2: gas, 3: coffee, 4: personal, 5: necessity, 6: other
+            Scanner userInput = new Scanner(System.in);
+            System.out.println("NOTE: Categories are:  1: food, 2: gas, 3: coffee, 4: personal, 5: necessity, 6: other. Total percentages must add to 100%");
+            int[] weights = new int[this.weights.length];
+
+            for (int i = 1; i < weights.length; i++) {
+                System.out.print("Enter weight for " + getWeightCategory(i) + ": ");
+                weights[i] = userInput.nextInt();
+            }
+            weightsTotal = Utils.getIntArraySum(weights);
+        }
+        this.setWeights(weights);
+    }
 
     public String toString()
     {
@@ -109,6 +153,21 @@ public class DataField
              "\nGas Spent: " + this.gasSpent +
              "\nCoffee Spent: " + this.coffeeSpent +
              "\nPersonal Spent: " + this.personalSpent +
+             "\nNecessity Spent: " + this.necessitySpent +
              "\nOther Spent: " + this.otherSpent;
+    }
+
+    public String getWeightCategory(int i)
+    {
+        return switch (i)
+        {
+            case 1 -> "Food";
+            case 2 -> "Gas";
+            case 3 -> "Coffee";
+            case 4 -> "Personal";
+            case 5 -> "Necessity";
+            case 6 -> "Other";
+            default -> "Invalid category";
+        };
     }
 }

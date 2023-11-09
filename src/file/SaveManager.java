@@ -3,7 +3,11 @@ package file;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Scanner;
+
+// When new data is added, must change the following: SaveManager.saveToFile | DataFile.initializeData | DataField entire class
+// TODO: Clearly gotta make this more dynamic
 
 public class SaveManager
 {
@@ -50,6 +54,14 @@ public class SaveManager
         data.setBudget(budget);
         data.setTotalSpent(totalSpent);
 
+        // Change default distribution
+        System.out.println("Current budget distribution: ");
+        data.printWeights();
+        System.out.println("Change? (y/n)");
+        String choice = userInput.next();
+        if(choice.startsWith("y"))
+            data.changeWeights();
+
         this.saveToFile();
     }
 
@@ -73,8 +85,12 @@ public class SaveManager
                   writer.println("coffee spent: " + this.df.getData().getCoffeeSpent());
                 else if (line.startsWith("personal spent"))
                   writer.println("personal spent: " + this.df.getData().getPersonalSpent());
+                else if (line.startsWith("necessity spent"))
+                    writer.println("necessity spent: " + this.df.getData().getNecessitySpent());
                 else if (line.startsWith("other spent"))
                   writer.println("other spent: " + this.df.getData().getOtherSpent());
+                else if (line.startsWith("weights"))
+                    writer.println("weights: " + Arrays.toString(this.df.getData().getWeights()));
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found");

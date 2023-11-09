@@ -22,22 +22,26 @@ public class Facade
         return instance;
     }
 
-    public int run()
+    public void run()
     {
-        budgeterMenu();
+        int menu;
+
+        do menu = budgeterMenu();
+        while (menu != -1);
+
         log.saveToFile();
-        return 1;
     }
 
-    public void budgeterMenu()
+    public int budgeterMenu()
     {
         Scanner userInput = new Scanner(System.in);
-        System.out.println("Current budget data: ");
+        System.out.println("\nCurrent budget data: ");
         printFileData();
 
         System.out.println("1. Add expense");
         System.out.println("2. Adjust budget");
-        System.out.println("3. Exit");
+        System.out.println("3. Budget analysis");
+        System.out.println("4. Save & Exit");
 
         int input = userInput.nextInt();
         switch (input)
@@ -46,21 +50,62 @@ public class Facade
                 addExpense(userInput);
                 break;
             case 2:
-                System.out.println("New budget: ");
-                int newBudget = userInput.nextInt();
-                this.log.getDataFile().getData().setBudget(newBudget);
+                editBudget(userInput);
                 break;
             case 3:
+                System.out.println("\nBudget analysis: ");
                 break;
+            case 4:
+                return -1;
             default:
-                System.out.println("Invalid input");
+                System.out.println("\nInvalid input");
                 break;
         }
+        return 0;
     }
 
+    public void budgetAnalysis()
+    {
+        int totalSpent = getData("total spent");
+        int budget = getData("budget");
+        int foodSpent = getData("food spent");
+        int gasSpent = getData("gas spent");
+        int coffeeSpent = getData("coffee spent");
+        int personalSpent = getData("personal spent");
+        int otherSpent = getData("other spent");
+    }
+
+    public void editBudget(Scanner sc)
+    {
+        System.out.print("1. Adjust budget");
+        System.out.print("2. Change budget distribution");
+        int input = sc.nextInt();
+
+        switch(input)
+        {
+            case 1:
+                System.out.println("Enter new budget: ");
+                int budget = sc.nextInt();
+                if(budget > 0)
+                    getDataField().setBudget(budget);
+                else System.out.println("Invalid input");
+
+                getDataField().setBudget(budget);
+                break;
+
+            case 2:
+                getDataField().changeWeights();
+                break;
+        }
+
+        int newBudget = sc.nextInt();
+        this.log.getDataFile().getData().setBudget(newBudget);
+    }
+
+    // Adds expense to current budget file. All info needed is prompted from user.
     public void addExpense(Scanner userInput)
     {
-        System.out.println("Enter expense category");
+        System.out.println("\nEnter expense category");
         System.out.println("1. Food");
         System.out.println("2. Gas");
         System.out.println("3. Coffee");
@@ -69,7 +114,7 @@ public class Facade
 
         int input = userInput.nextInt();
 
-        System.out.println("Enter amount spent");
+        System.out.println("\nEnter amount spent");
         int amount = userInput.nextInt();
 
         DataField d = this.log.getDataFile().getData();
@@ -105,6 +150,33 @@ public class Facade
     public void printFileData()
     {
         System.out.println(this.log.getSaveFileData());
+    }
+
+    public DataField getDataField()
+    {
+        return this.log.getDataFile().getData();
+    }
+
+    public int getData(String dataType)
+    {
+        dataType = dataType.toLowerCase();
+        DataField df = getDataField();
+        if(dataType.equals("budget"))
+            return df.getBudget();
+        else if(dataType.contains("total"))
+            return df.getTotalSpent();
+        else if(dataType.contains("food"))
+            return df.getFoodSpent();
+        else if(dataType.contains("gas"))
+            return df.getGasSpent();
+        else if(dataType.contains("coffee"))
+            return df.getCoffeeSpent();
+        else if(dataType.contains("personal"))
+            return df.getPersonalSpent();
+        else if(dataType.contains("other"))
+            return df.getOtherSpent();
+        else
+            return -1;
     }
 
 }
