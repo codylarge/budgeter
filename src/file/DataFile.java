@@ -1,6 +1,7 @@
 package file;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,12 +14,14 @@ public class DataFile
     private final File file;
     private List<String> fileLines;
     private final DataField data;
+    private final LocalDate creationDate; // Adding the creationDate variable
 
 
     /* FILE METHODS */
     public DataFile(File file)
     {
         this.file = file;
+        this.creationDate = LocalDate.now();
         readFile();
         this.data = new DataField();
         initializeDataField();
@@ -37,6 +40,22 @@ public class DataFile
         return file;
     }
 
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public int daysSinceCreation() {
+        LocalDate currentDate = LocalDate.now();
+        int days = 0;
+        LocalDate tempDate = LocalDate.from(creationDate);
+
+        while (!tempDate.isEqual(currentDate)) {
+            tempDate = tempDate.plusDays(1);
+            days++;
+        }
+
+        return days;
+    }
 
     // Fill fileLines
     private void readFile()
@@ -75,6 +94,8 @@ public class DataFile
                 this.data.setName(split[1].trim());
             } else if (line.toLowerCase().startsWith("budget")) {
                 this.data.setBudget(Integer.parseInt(split[1].trim()));
+            } else if (line.toLowerCase().startsWith("duration")) {
+                this.data.setBudgetDuration(Integer.parseInt(split[1].trim()));
             } else if (line.toLowerCase().startsWith("total spent")) {
                 this.data.setTotalSpent(Integer.parseInt(split[1].trim()));
             } else if (line.toLowerCase().startsWith("food spent")) {
@@ -86,7 +107,7 @@ public class DataFile
             } else if (line.toLowerCase().startsWith("personal spent")) {
                 this.data.setPersonalSpent(Integer.parseInt(split[1].trim()));
             } else if (line.toLowerCase().startsWith("necessity spent")) {
-                this.data.setPersonalSpent(Integer.parseInt(split[1].trim()));
+                this.data.setNecessitySpent(Integer.parseInt(split[1].trim()));
             } else if (line.toLowerCase().startsWith("other spent")) {
                 this.data.setOtherSpent(Integer.parseInt(split[1].trim()));
             } else if (line.contains("weights")) {

@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 // When new data is added, must change the following: SaveManager.saveToFile | DataFile.initializeData | DataField entire class
-// TODO: Clearly gotta make this more dynamic
 
 public class SaveManager
 {
@@ -15,7 +14,6 @@ public class SaveManager
     public SaveManager()
     {
         this.df = new DataFile(selectSaveFile()); // When creating saveManager, prompt user for save file immediately.
-
 
         // If it's a new save
         if(this.getDataFile().getData().getName().equals("null"))
@@ -48,10 +46,13 @@ public class SaveManager
         int budget = userInput.nextInt();
         System.out.print("Enter amount of money already spent: ");
         int totalSpent = userInput.nextInt();
+        System.out.print("Enter budget duration: ");
+        int budgetDuration = userInput.nextInt();
 
         // Set new save data
         data.setName(name);
         data.setBudget(budget);
+        data.setBudgetDuration(budgetDuration);
         data.setTotalSpent(totalSpent);
 
         // Change default distribution
@@ -75,6 +76,8 @@ public class SaveManager
                     writer.println("name: " + this.df.getData().getName());
                 else if (line.startsWith("budget"))
                   writer.println("budget: " + this.df.getData().getBudget());
+                else if (line.startsWith("duration"))
+                    writer.println("duration: " + this.df.getData().getBudgetDuration());
                 else if (line.startsWith("total spent"))
                   writer.println("total spent: " + this.df.getData().getTotalSpent());
                 else if (line.startsWith("food spent"))

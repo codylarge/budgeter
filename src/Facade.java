@@ -8,11 +8,12 @@ public class Facade
     private static Facade instance;
     private final SaveManager log;
     // Private constructor to prevent creating instances outside this class.
-    private Facade()
+    public Facade()
     {
         this.log = new SaveManager();
     }
 
+    /*
     public static Facade GetInstance()
     {
         if (instance == null)
@@ -21,6 +22,7 @@ public class Facade
         }
         return instance;
     }
+    */
 
     public void run()
     {
@@ -41,7 +43,8 @@ public class Facade
         System.out.println("1. Add expense");
         System.out.println("2. Adjust budget");
         System.out.println("3. Budget analysis");
-        System.out.println("4. Save & Exit");
+        System.out.println("4. Budget duration");
+        System.out.println("5. Save & Exit");
 
         int input = userInput.nextInt();
         switch (input)
@@ -56,6 +59,8 @@ public class Facade
                 System.out.println("\nBudget analysis: ");
                 break;
             case 4:
+                return -1;
+            case 5:
                 return -1;
             default:
                 System.out.println("\nInvalid input");
@@ -177,6 +182,15 @@ public class Facade
             return df.getOtherSpent();
         else
             return -1;
+    }
+
+    /**
+     ** Returns the SaveManager object
+     ** Should only be used for testing purposes!!
+     **/
+    public SaveManager getSaveManager()
+    {
+        return this.log;
     }
 
 }

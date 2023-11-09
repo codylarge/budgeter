@@ -10,15 +10,15 @@ public class DataField
 {
     /* DATA */
     private String name;
-    private int budget, totalSpent, foodSpent, gasSpent, coffeeSpent, personalSpent, necessitySpent, otherSpent;
+    private int budget, totalSpent, foodSpent, gasSpent, coffeeSpent, personalSpent, necessitySpent, otherSpent, budgetDuration;
     int[] weights; // represents the percentages of the budget that each category should spend
     public DataField()
     {
-        this(null, 0, 0, 0, 0, 0, 0, 0, 0, new int[]{25, 10, 10, 10, 30, 15});
+        this(null, 0, 0, 0, 0, 0, 0, 0, 0, 30, new int[]{25, 10, 10, 10, 30, 15});
     }
 
     public DataField(String name, int budget, int totalSpent, int foodSpent, int gasSpent,
-                     int coffeeSpent, int personalSpent, int necessitySpent, int otherSpent, int[] weights)
+                     int coffeeSpent, int personalSpent, int necessitySpent, int otherSpent, int budgetDuration, int[] weights)
     {
         this.name = name;
         this.budget = budget;
@@ -73,6 +73,10 @@ public class DataField
     {
         this.weights = weights;
     }
+    public void setBudgetDuration(int budgetDuration)
+    {
+        this.budgetDuration = budgetDuration;
+    }
 
     // Getters
     public String getName()
@@ -111,6 +115,11 @@ public class DataField
     {
         return this.otherSpent;
     }
+
+    public int getBudgetDuration()
+    {
+        return this.budgetDuration;
+    }
     public int[] getWeights() {
         return this.weights;
     }
@@ -148,6 +157,7 @@ public class DataField
     {
         return "Name: " + this.name +
              "\nBudget: " + this.budget +
+             "\nBudget Duration: " + this.budgetDuration +
              "\nTotal Spent: " + this.totalSpent +
              "\nFood Spent: " + this.foodSpent +
              "\nGas Spent: " + this.gasSpent +
@@ -170,4 +180,5 @@ public class DataField
             default -> "Invalid category";
         };
     }
+
 }
