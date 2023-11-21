@@ -41,7 +41,8 @@ public class BudgeterTests
 
         String scanner = "2\n" +
                          "";
-
+        System.setIn(new java.io.ByteArrayInputStream(scanner.getBytes()));
+        setup();
     }
     private int editBudgetAdjust()
     {

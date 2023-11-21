@@ -64,7 +64,7 @@ public class Facade
                 System.out.println("\nBudget analysis: ");
                 break;
             case 4:
-                return -1;
+                return 0;
             case 5:
                 return -1;
             default:
