@@ -190,7 +190,7 @@ public class SaveManager
     }
 
      DataFile getDefaultSave() {
-        File defaultFile = new File("templates/default.txt");
+        File defaultFile = new File("src/templates/default.txt");
         return new DataFile(defaultFile);
      }
 }
