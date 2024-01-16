@@ -14,7 +14,20 @@ public class DataField
     int[] weights; // represents the percentages of the budget that each category should spend
     public DataField()
     {
-        this(null, 0, 0, 0, 0, 0, 0, 0, 0, 30, new int[]{25, 10, 10, 10, 30, 15});
+        this
+        (
+            null,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            30,
+            new int[]{25, 10, 10, 10, 30, 15}
+        );
     }
 
     public DataField(String name, int budget, int totalSpent, int foodSpent, int gasSpent,

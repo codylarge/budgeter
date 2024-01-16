@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 // When new data is added, must change the following: SaveManager.saveToFile | DataFile.initializeData | DataField entire class
@@ -18,7 +19,7 @@ public class SaveManager
         this.df = new DataFile(selectSaveFile()); // When creating saveManager, prompt user for save file immediately.
 
         // If it's a new save
-        if(this.getDataFile().getData().getName().equals("null"))
+        if(Objects.equals(this.getDataFile().getData().getName(), "null"))
         {
             initializeNewSave();
         }
@@ -189,6 +190,7 @@ public class SaveManager
     }
 
      DataFile getDefaultSave() {
-         return new DataFile(new File("defaultlog.txt"));
+        File defaultFile = new File("templates/default.txt");
+        return new DataFile(defaultFile);
      }
 }
